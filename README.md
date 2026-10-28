@@ -1,6 +1,6 @@
 # Lara Díaz · Portfolio profesional
 
-Primera propuesta local con React, Vite y Tailwind CSS. Aplicación independiente de la Landing y las demos. Sin backend, formularios, servicios externos ni fuentes remotas. No se realizó publicación ni se inicializó un repositorio Git.
+Portfolio profesional con React, Vite y Tailwind CSS. Aplicación independiente de la Landing y las demos. Sin backend, formularios, servicios externos ni fuentes remotas. Repositorio: https://github.com/portfolioslaplata-code/Lara-Diaz.
 
 ## Desarrollo
 
@@ -61,12 +61,17 @@ Se consultaron los PDF proporcionados como referencias. El portfolio histórico 
 
 ## Límites de esta etapa
 
-Sin commit, push ni deploy. Sin CV descargable, slider, analytics o servicios externos. La publicación y su dominio se definirán por separado después de validar el contenido.
+Los cambios se suben a GitHub cuando se solicita. Esta tarea no incluye una publicación manual. Sin CV descargable, slider, analytics o servicios externos. La publicación y su dominio se definirán por separado después de validar el contenido.
 
-## Validación de esta implementación
+## Refinamiento de contenido (iteración 2)
 
-- Lint y build completados correctamente.
-- Ocho casos de Playwright verificados en Edge: estructura y metadata; las tres fichas con teclado, foco y cierre; ficha larga con galería y campos opcionales; responsive a 320, 390, 768 y 1440 px; movimiento reducido.
-- Seis casos pasaron en la primera ejecución. Se corrigió el selector del test móvil para contemplar el cambio de nombre de “Menú” a “Cerrar menú” y pasaron los dos casos restantes al repetirlos.
-- Capturas revisadas en escritorio, tablet y móvil. Sin desbordes horizontales detectados.
-- No se pudo inspeccionar interactivamente la vista previa en el navegador integrado: su política de acceso bloqueó la vinculación de la pestaña. Esto no impidió las pruebas locales en Edge. Los servidores temporales se detuvieron al finalizar; iniciar con `npm run dev` para revisar el boceto.
+- Sobre mí prioriza el recorrido en cooperativas de La Plata y la región.
+- Formación selecciona cinco entradas en tres categorías: académica, construcción sustentable y actividad académica.
+- Experiencia selecciona cuatro entradas con ARQEP / AEP primero. “Inicio: 2019” expresa solamente el inicio documentado y no afirma vigencia actual. Docencia se resume en una sola descripción.
+- Las notas de validación pertenecen a esta documentación, a `pending`, a `needsConfirmation` y a `services.confirmed`, y no se renderizan como avisos públicos. “En curso” es el estado académico visible; actualizarlo desde los datos cuando Lara lo confirme.
+- Se retiraron el epígrafe del Hero y los términos decorativos de Sobre mí. Se mantienen los espacios para futuras fotografías.
+- La navegación utiliza un subrayado de 1 px con transición de 250 ms desde la izquierda, activo al enfocar y al pasar el cursor con un puntero compatible. El movimiento reducido elimina la transición.
+
+## Validación
+
+Ejecutar los scripts anteriores para revisar lint, build y diez casos de Playwright en Edge. Cubren contenido seleccionado, ausencia de notas internas, navegación por teclado, apertura y cierre de modales, fichas con scroll interno, movimiento reducido, hover/foco del menú y dispositivos táctiles. Responsive y ausencia de desbordes se verifican a 320, 390, 768 y 1440 px; las capturas de Formación y Experiencia se generan además por separado en móvil y escritorio.

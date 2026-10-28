@@ -29,7 +29,7 @@ export default function Navbar({ data, navigation }) {
       <nav id="main-navigation" className={`main-navigation ${open ? 'is-open' : ''}`} aria-label={data.ui.mainNavigation} onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget) && event.relatedTarget !== button.current) setOpen(false);
       }}>
-        {navigation.map((item) => <a key={item.id} href={`#${item.id}`} onClick={() => setOpen(false)} className={item.id === 'contacto' ? 'nav-contact' : ''}>{item.label}{item.id === 'contacto' && <span aria-hidden="true">↗</span>}</a>)}
+        {navigation.map((item) => <a key={item.id} href={`#${item.id}`} onClick={() => setOpen(false)} className={item.id === 'contacto' ? 'nav-contact' : ''}><span className="nav-label">{item.label}</span>{item.id === 'contacto' && <span aria-hidden="true">↗</span>}</a>)}
       </nav>
     </div>
   </header>;

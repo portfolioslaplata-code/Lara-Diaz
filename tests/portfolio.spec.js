@@ -14,7 +14,17 @@ test('estructura, metadatos, anclas y contenido provisional', async ({ page }) =
   }
   await expect(page.locator('.project-card')).toHaveCount(3);
   await expect(page.getByText('Contenido provisional', { exact: true })).toHaveCount(3);
-  await expect(page.getByText('En curso según CV de 2024', { exact: true })).toBeVisible();
+  await expect(page.locator('#formacion').getByText('En curso', { exact: true })).toBeVisible();
+  await expect(page.locator('.education-group')).toHaveCount(3);
+  await expect(page.locator('.education-group li')).toHaveCount(5);
+  await expect(page.locator('.experience-row')).toHaveCount(4);
+  await expect(page.locator('.experience-row h3').first()).toHaveText('Cooperativa ARQEP / AEP');
+  await expect(page.locator('.experience-date').first()).toHaveText('Inicio: 2019');
+  await expect(page.locator('.experience-description ul')).toHaveCount(0);
+  await expect(page.locator('#sobre-mi')).toContainText('cooperativas de La Plata y la región');
+  await expect(page.getByText(/según CV|pendiente de confirmar|continuidad por confirmar|documentado hasta 2024|propuesta inicial.*validación/i)).toHaveCount(0);
+  await expect(page.getByText('Espacio / materia / territorio', { exact: true })).toHaveCount(0);
+  await expect(page.locator('.about-terms')).toHaveCount(0);
   await expect(page.getByText('Actualidad', { exact: false })).toHaveCount(0);
   await expect(page.locator('a[href^="mailto:"]')).toHaveAttribute('href', 'mailto:diazlara.arq@gmail.com');
   expect(errors).toEqual([]);
@@ -99,6 +109,12 @@ for (const width of [320, 390, 768, 1440]) {
     await dialog.getByRole('button', { name: 'Cerrar proyecto' }).click();
     await page.locator('#inicio').scrollIntoViewIfNeeded();
     await page.screenshot({ path: `test-results/portfolio-${width}.png`, fullPage: true });
+    if (width === 390 || width === 1440) {
+      // Ocultar la cabecera fija solo en capturas aisladas: no pertenece al bloque.
+      const style = '.site-header, .skip-link { visibility: hidden !important; }';
+      await page.locator('#formacion').screenshot({ path: `test-results/formacion-${width}.png`, style });
+      await page.locator('#experiencia').screenshot({ path: `test-results/experiencia-${width}.png`, style });
+    }
   });
 }
 
@@ -106,4 +122,45 @@ test('movimiento reducido desactiva las animaciones decorativas', async ({ page 
   await page.goto('/');
   await expect(page.locator('.hero-copy')).toHaveCSS('animation-name', 'none');
   await expect(page.locator('html')).toHaveCSS('scroll-behavior', 'auto');
+});
+
+test('subrayado de navegación con hover, foco y transición inversa', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/');
+  const nav = page.getByRole('navigation', { name: 'Navegación principal' });
+  for (const name of ['Sobre mí', 'Contacto']) {
+    const link = nav.getByRole('link', { name, exact: true });
+    const underline = () => link.locator('.nav-label').evaluate((element) => getComputedStyle(element, '::after').transform);
+    await expect.poll(underline).toBe('matrix(0, 0, 0, 1, 0, 0)');
+    await link.hover();
+    await expect.poll(underline).toBe('matrix(1, 0, 0, 1, 0, 0)');
+    await page.mouse.move(0, 0);
+    await expect.poll(underline).toBe('matrix(0, 0, 0, 1, 0, 0)');
+    await link.focus();
+    await page.keyboard.press('Shift');
+    await expect(link).toBeFocused();
+    await expect(link).toHaveCSS('outline-style', 'solid');
+    await expect.poll(underline).toBe('matrix(1, 0, 0, 1, 0, 0)');
+    const style = await link.locator('.nav-label').evaluate((element) => {
+      const style = getComputedStyle(element, '::after');
+      return [style.height, style.transformOrigin, style.transitionDuration];
+    });
+    expect(style[0]).toBe('1px');
+    expect(style[1]).toMatch(/^0px/);
+    expect(style[2]).toBe('0.25s');
+    await link.evaluate((element) => element.blur());
+    await expect.poll(underline).toBe('matrix(0, 0, 0, 1, 0, 0)');
+  }
+});
+
+test('en pantallas táctiles el subrayado responde al foco y evita hover artificial', async ({ browser }) => {
+  const context = await browser.newContext({ hasTouch: true, viewport: { width: 1440, height: 900 }, reducedMotion: 'reduce' });
+  const page = await context.newPage();
+  try {
+    await page.goto('/');
+    const link = page.locator('.main-navigation a').first();
+    await link.hover();
+    expect(await link.locator('.nav-label').evaluate((element) => getComputedStyle(element, '::after').transform)).toBe('matrix(0, 0, 0, 1, 0, 0)');
+  } finally { await context.close(); }
 });

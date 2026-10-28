@@ -17,7 +17,6 @@ export function Hero({ data, activeIds }) {
       </div>
       <figure className="hero-figure">
         <PortraitSlot image={content.image} className="hero-image-slot"><ArchitecturalArt /></PortraitSlot>
-        <figcaption><span aria-hidden="true">↳</span> {content.artCaption}</figcaption>
       </figure>
     </div>
     <div className="hero-bottom">
@@ -32,7 +31,6 @@ export function About({ data, number }) {
     <div className="page-shell about-grid">
       <div id="about-heading"><SectionHeading content={data} number={number} /></div>
       <div className="about-copy">{data.paragraphs.map((paragraph) => <p key={paragraph}>{paragraph}</p>)}
-        <ul className="about-terms">{data.terms.map((term) => <li key={term}>{term}</li>)}</ul>
       </div>
       <PortraitSlot image={data.image} className="about-image-slot">
         <div className="about-symbol" aria-hidden="true"><span /><span /><span /></div>
@@ -56,18 +54,18 @@ export function Education({ data, number }) {
 
 export function Experience({ data, number }) {
   return <section id="experiencia" className="section experience-section" aria-labelledby="experience-heading"><div className="page-shell">
-    <div className="experience-intro"><div id="experience-heading"><SectionHeading content={data} number={number} /></div><p className="source-note">{data.sourceNote}</p></div>
+    <div className="experience-intro" id="experience-heading"><SectionHeading content={data} number={number} /></div>
     <ol className="experience-list">{data.items.map((item) => <li key={item.id} className="experience-row">
-      <div className="experience-date"><span>{item.date}</span>{item.status && <small>{item.status}</small>}</div>
+      <div className="experience-date"><span>{item.date}</span></div>
       <div className="experience-identity"><h3>{item.organization}</h3><p>{item.role}</p>{item.location && <span>{item.location}</span>}</div>
-      <div className="experience-description">{item.description && <p>{item.description}</p>}{item.details?.length > 0 && <ul>{item.details.map((detail) => <li key={detail.text}><span>{detail.date}</span><p>{detail.text}</p></li>)}</ul>}</div>
+      <div className="experience-description">{item.description && <p>{item.description}</p>}</div>
     </li>)}</ol>
   </div></section>;
 }
 
 export function Services({ data, number }) {
   return <section id="servicios" className="section services-section page-shell" aria-labelledby="services-heading">
-    <div id="services-heading"><SectionHeading content={data} number={number} />{!data.confirmed && <p className="services-note">{data.pendingNote}</p>}</div>
+    <div id="services-heading"><SectionHeading content={data} number={number} /></div>
     <ol className="services-list">{data.items.map((item, index) => <li key={item.title}>
       <span className="service-number">{String(index + 1).padStart(2, '0')}</span><div><h3>{item.title}</h3><p>{item.description}</p></div><span className="service-cross" aria-hidden="true">+</span>
     </li>)}</ol>

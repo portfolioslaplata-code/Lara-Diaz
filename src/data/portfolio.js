@@ -27,7 +27,6 @@ export const portfolio = {
     primaryLabel: 'Ver proyectos',
     secondaryLabel: 'Contacto',
     scrollLabel: 'Conocé mi recorrido',
-    artCaption: 'Espacio / materia / territorio',
     image: null, // { src: '/images/lara.webp', alt: '...', position: '50% 50%' }
   },
   about: {
@@ -35,10 +34,9 @@ export const portfolio = {
     title: 'Una práctica,',
     accent: 'muchas conexiones.',
     paragraphs: [
-      'Soy arquitecta egresada de la Universidad Nacional de La Plata en 2019. Mi recorrido reúne el proyecto arquitectónico y la dirección de obra con experiencias en construcción sustentable y sistemas constructivos en madera.',
-      'El trabajo en cooperativas, los proyectos de hábitat e integración sociourbana y la docencia también forman parte de esa trayectoria. Son ámbitos que conectan el conocimiento técnico con los materiales, el territorio y las personas que lo habitan.',
+      'Soy arquitecta egresada de la Universidad Nacional de La Plata. Gran parte de mi recorrido profesional está vinculado al trabajo en cooperativas de La Plata y la región, participando en proyectos y obras públicas y privadas, así como en iniciativas de hábitat e integración sociourbana junto a organizaciones sociales y municipios.',
+      'Mi experiencia también incluye el diseño y la dirección de obra, la construcción con sistemas de madera y la docencia. Estas distintas áreas forman parte de una práctica profesional que aborda la arquitectura desde el proyecto, la construcción y su relación con el contexto social y territorial.',
     ],
-    terms: ['Arquitectura', 'Territorio', 'Sustentabilidad', 'Construcción'],
     figureCaption: 'Materiales, espacios y personas.',
     image: null, // Misma estructura que hero.image. El gráfico editorial se reemplaza automáticamente.
   },
@@ -47,38 +45,27 @@ export const portfolio = {
     description: 'Una formación que cruza arquitectura, materiales y desarrollo territorial.',
     groups: [
       { id: 'academica', title: 'Formación académica', items: [
-        { year: '2019', title: 'Arquitecta', institution: 'Facultad de Arquitectura y Urbanismo · UNLP' },
+        { year: '2019', title: 'Arquitecta', institution: 'Universidad Nacional de La Plata' },
         { year: '2020', title: 'Diploma Superior en Desarrollo Local, Territorial y Economía Social', institution: 'FLACSO' },
       ] },
-      { id: 'sustentable', title: 'Bioarquitectura y construcción sustentable', items: [
-        { year: '2024', title: 'Diploma en Bioarquitectura', institution: 'UTN · Facultad Regional San Francisco, FPAA, FADEA y Aula Abierta', status: 'En curso según CV de 2024', needsConfirmation: true },
-        { year: '2024', title: 'Jornadas FEDEMAD', institution: 'Construcción en madera y energías renovables' },
+      { id: 'sustentable', title: 'Construcción sustentable', items: [
+        { year: '2024', title: 'Diploma en Bioarquitectura', institution: 'UTN · Facultad Regional San Francisco', status: 'En curso', needsConfirmation: true },
+        { year: '2024', title: 'Construcción en madera y energías renovables', institution: 'Jornadas FEDEMAD' },
       ] },
-      { id: 'territorio', title: 'Territorio, hábitat y economía social', items: [
-        { year: '2024', title: 'Cooperativismo en la escuela', institution: 'Universidad del Chubut' },
-        { year: '2023', title: 'La gestión interna de las organizaciones', institution: 'FLACSO' },
-        { year: '2016', title: 'Hábitat III', institution: 'Conferencia de Naciones Unidas sobre vivienda y desarrollo urbano sostenible · Ecuador' },
-      ] },
-      { id: 'participacion', title: 'Formación y participación profesional', items: [
-        { year: '2024', title: 'Liderazgo y gestión de organizaciones', institution: 'Trayectos de formación en Economía Social, Popular y Solidaria' },
-        { year: '2023', title: 'Los espacios de la enseñanza de la arquitectura', institution: 'Ponencia y publicación · Congreso ARQUISUR' },
+      { id: 'participacion', title: 'Actividad académica', items: [
+        { year: '2023', title: 'Ponencia y publicación ARQUISUR', institution: '“Los espacios de la enseñanza de la arquitectura”' },
       ] },
     ],
   },
   experience: {
     eyebrow: 'Experiencias laborales', title: 'Del proyecto', accent: 'al territorio.',
     description: 'Obra, trabajo colectivo y enseñanza: distintas escalas de una misma práctica profesional.',
-    sourceNote: 'Recorrido documentado hasta 2024. La continuidad de las actividades está pendiente de actualización.',
     items: [
-      { id: 'rio-tigre', date: '2024', organization: 'Río Tigre', role: 'Arquitecta', location: 'Cholila, Chubut', status: 'Continuidad por confirmar', needsConfirmation: true, description: 'Diseño y construcción de viviendas con sistemas de madera. Dirección y gestión de obra, interpretación de proyectos, seguimiento constructivo y aportes técnicos al sistema.' },
-      { id: 'arqep', date: 'Desde 2019, según CV de 2024', organization: 'Cooperativa ARQEP / AEP', role: 'Arquitecta y socia', location: '', status: 'Continuidad por confirmar', needsConfirmation: true, description: 'Proyecto y dirección de obras públicas y privadas. Gestión de iniciativas de hábitat y políticas públicas junto a organizaciones sociales y municipios.' },
-      { id: 'opisu', date: '2020–2021', organization: 'OPISU', role: 'Arquitecta responsable urbana', location: 'Provincia de Buenos Aires', description: 'Proyecto y seguimiento de obras públicas en barrios populares, relevamientos técnicos e informes de gestión.' },
-      { id: 'docencia', date: '2022–2024', organization: 'Experiencia docente', role: 'Arquitectura y formación técnica', description: '', details: [
-        { date: '2022–2023', text: 'Ayudante en Taller de Proyecto Arquitectónico 1 y 2 · Universidad Nacional de Avellaneda.' },
-        { date: '2024', text: 'Políticas Públicas y Desarrollo Local · Instituto Superior Prof. Pablo Luppi.' },
-        { date: '2024', text: 'Legislación de la Construcción y Gestión y Administración de Obra · ESETP N.º 7727.' },
-      ] },
-      { id: 'ambiental', date: '2018–2019', organization: 'Cooperativa Ambiental', role: 'Dirección de obras públicas', location: 'Ensenada, Buenos Aires', description: 'Dirección de obras públicas adjudicadas a la cooperativa.' },
+      // 2019 es el inicio documentado; no implica vigencia actual ni fecha de finalización.
+      { id: 'arqep', date: 'Inicio: 2019', organization: 'Cooperativa ARQEP / AEP', role: 'Arquitecta y socia', location: '', needsConfirmation: true, description: 'Proyecto y dirección de obras públicas y privadas. Trabajo cooperativo en iniciativas de hábitat e integración sociourbana junto a organizaciones sociales y municipios.' },
+      { id: 'rio-tigre', date: '2024', organization: 'Río Tigre', role: 'Arquitecta', location: 'Cholila, Chubut', needsConfirmation: true, description: 'Dirección y gestión de obras de viviendas en madera, interpretación de proyectos y aportes técnicos a sistemas constructivos sustentables.' },
+      { id: 'opisu', date: '2020–2021', organization: 'OPISU', role: 'Arquitecta responsable urbana', location: 'Provincia de Buenos Aires', description: 'Proyecto y seguimiento de obras públicas en barrios populares, relevamientos técnicos e iniciativas de integración sociourbana.' },
+      { id: 'docencia', date: '2022–2024', organization: 'Experiencia docente', role: 'Docencia universitaria y técnica', description: 'Experiencia en enseñanza de proyectos arquitectónicos, políticas públicas, legislación de la construcción y gestión de obra.' },
     ],
   },
   projects: {
@@ -93,7 +80,6 @@ export const portfolio = {
     eyebrow: 'Servicios', title: 'Distintas escalas.', accent: 'Una mirada integral.',
     description: 'Áreas de trabajo que se desprenden de mi experiencia profesional.',
     confirmed: false,
-    pendingNote: 'Propuesta inicial de servicios, pendiente de validación con Lara.',
     items: [
       { title: 'Proyecto arquitectónico', description: 'Diseño de viviendas, ampliaciones y espacios adaptados a diferentes necesidades.' },
       { title: 'Dirección y gestión de obra', description: 'Planificación, coordinación y seguimiento técnico de proyectos constructivos.' },
