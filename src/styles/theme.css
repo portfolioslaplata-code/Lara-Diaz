@@ -1,0 +1,26 @@
+:root {
+  --canvas: #fcfaf6;
+  --white: #ffffff;
+  --sand: #e9dfd0;
+  --surface: #f3eee6;
+  --terracotta: #bb7458;
+  --burgundy: #773e48;
+  --burgundy-dark: #5b2b34;
+  --mustard: #d5ac59;
+  --ink: #302d2a;
+  --muted: #70655c;
+  --line: #d8cfc3;
+  --font-body: 'Segoe UI', Arial, sans-serif;
+  --font-display: 'Georgia', 'Times New Roman', serif;
+  --page-width: 1280px;
+  --page-gutter: clamp(24px, 5.5vw, 88px);
+}
+
+@theme inline {
+  --color-canvas: var(--canvas);
+  --color-ink: var(--ink);
+  --color-burgundy: var(--burgundy);
+  --color-sand: var(--sand);
+  --font-sans: var(--font-body);
+  --font-editorial: var(--font-display);
+}
