@@ -1,4 +1,5 @@
 import { ArchitecturalArt, Arrow, PortraitSlot, SectionHeading } from './Primitives.jsx';
+import BrandMark from './BrandMark.jsx';
 
 export function Hero({ data, activeIds }) {
   const content = data.hero;
@@ -82,8 +83,8 @@ export function Contact({ data, number }) {
 
 export function Footer({ data, navigation }) {
   const footerLinks = navigation.filter((item) => ['sobre-mi', 'proyectos', 'contacto'].includes(item.id));
-  return <footer className="site-footer page-shell"><a className="footer-name" href="#inicio">{data.name}<span>{data.profession}</span></a>
+  return <footer className="site-footer page-shell"><a className="footer-name" href="#inicio"><BrandMark /><span className="footer-identity">{data.name}<span>{data.profession}</span></span></a>
     <nav aria-label={data.ui.footerNavigation}>{footerLinks.map((item) => <a key={item.id} href={`#${item.id}`}>{item.label}</a>)}</nav>
-    <span className="footer-year">© {new Date().getFullYear()} <span className="footer-mark" aria-hidden="true">✳</span></span>
+    <span className="footer-year">© {new Date().getFullYear()}</span>
   </footer>;
 }

@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import BrandMark from './BrandMark.jsx';
 
 export default function Navbar({ data, navigation }) {
   const [open, setOpen] = useState(false);
@@ -20,8 +21,8 @@ export default function Navbar({ data, navigation }) {
   return <header className="site-header" ref={header}>
     <div className="page-shell header-inner">
       <a href="#inicio" className="brand" aria-label={`${data.name} · ${data.ui.backTop}`} onClick={() => setOpen(false)}>
-        <span className="brand-monogram" aria-hidden="true">{data.initials}<span>·</span></span>
-        <span className="brand-profession">{data.profession}</span>
+        <BrandMark />
+        <span className="brand-copy"><span className="brand-name">{data.name}</span><span className="brand-profession">{data.profession}</span></span>
       </a>
       <button ref={button} type="button" className="menu-toggle" aria-expanded={open} aria-controls="main-navigation" onClick={() => setOpen(!open)}>
         {open ? data.ui.closeMenu : data.ui.menu}<span aria-hidden="true">{open ? '−' : '+'}</span>

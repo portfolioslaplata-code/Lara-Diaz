@@ -65,7 +65,7 @@ test('una ficha con contenido futuro tiene scroll interno y omite campos vacíos
       id: 'fixture', title: 'Ficha de prueba automatizada', provisional: false, artwork: 1,
       category: 'Categoría de prueba', year: 'Año de prueba', location: '', role: '',
       description: 'Texto de prueba.', narrative: Array.from({ length: 25 }, (_, i) => `Párrafo de verificación ${i}. Contenido de prueba para verificar el desplazamiento interno.`),
-      images: [{ src: '/favicon.svg', alt: 'Recurso de prueba', caption: 'Epígrafe de prueba' }],
+      images: [{ src: '/brand/favicon-48.png', alt: 'Recurso de prueba', caption: 'Epígrafe de prueba' }],
       technical: [{ label: 'Dato de prueba', value: 'Valor de prueba' }, { label: '', value: '' }],
     }])};`,
   }));
