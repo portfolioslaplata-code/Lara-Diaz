@@ -9,8 +9,7 @@ export function Hero({ data, activeIds }) {
         <p className="eyebrow"><span className="tiny-square" />{content.eyebrow}</p>
         <h1 id="hero-title">{data.name}</h1>
         <p className="hero-profession">{data.profession}</p>
-        <p className="hero-statement">{content.headline}<br /><em>{content.accent}</em></p>
-        <p className="hero-description">{content.description}</p>
+        <p className="hero-statement">{content.headline}</p>
         <div className="hero-actions flex flex-wrap items-center gap-5">
           {activeIds.has('proyectos') && <a href="#proyectos" className="button-primary">{content.primaryLabel}<Arrow diagonal /></a>}
           {activeIds.has('contacto') && <a href="#contacto" className="text-link">{content.secondaryLabel}<Arrow diagonal /></a>}

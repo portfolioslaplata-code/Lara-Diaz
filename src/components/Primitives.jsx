@@ -48,5 +48,5 @@ export function ArchitecturalArt({ variant = 0 }) {
 }
 
 export function PortraitSlot({ image, children, className = '' }) {
-  return <div className={className}>{image?.src ? <img src={image.src} alt={image.alt || ''} style={{ objectPosition: image.position || 'center' }} loading={className.includes('hero') ? 'eager' : 'lazy'} /> : children}</div>;
+  return <div className={className}>{image?.src ? <img src={image.src} alt={image.alt || ''} width={image.width} height={image.height} style={{ objectPosition: image.position || 'center' }} loading={className.includes('hero') ? 'eager' : 'lazy'} /> : children}</div>;
 }

@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import ProjectSlider from './ProjectSlider.jsx';
 
 // El dialog nativo aporta top layer, fondo inerte y contención del foco.
 // React controla su montaje. Se restaura tanto el scroll como la card de origen.
@@ -22,7 +23,7 @@ export default function ProjectModal({ project, content, closeLabel, onClose }) 
     };
   }, []);
 
-  const facts = ['category', 'year', 'location', 'role'].filter((key) => project[key]);
+  const facts = ['category', 'year', 'location', 'role', 'status'].filter((key) => project[key]);
   const narrative = project.narrative?.filter(Boolean) || [];
   const images = project.images?.filter((image) => image.src) || [];
   const technical = project.technical?.filter((item) => item.label && item.value) || [];
@@ -46,7 +47,7 @@ export default function ProjectModal({ project, content, closeLabel, onClose }) 
           {facts.length > 0 && <dl className="project-facts">{facts.map((key) => <div key={key}><dt>{content.labels[key]}</dt><dd>{project[key]}</dd></div>)}</dl>}
           {project.description && <p className="project-description">{project.description}</p>}
           {narrative.length > 0 && <section className="project-narrative"><h3>{content.labels.narrative}</h3>{narrative.map((paragraph, index) => <p key={index}>{paragraph}</p>)}</section>}
-          {images.length > 0 && <section className="project-gallery" aria-label={content.labels.gallery}>{images.map((image, index) => <figure key={`${image.src}-${index}`}><img src={image.src} alt={image.alt || ''} loading="lazy" />{image.caption && <figcaption>{image.caption}</figcaption>}</figure>)}</section>}
+          {images.length > 0 && <ProjectSlider key={project.id} images={images} labels={content.labels} />}
           {technical.length > 0 && <section className="project-technical"><h3>{content.labels.technical}</h3><dl>{technical.map((item) => <div key={item.label}><dt>{item.label}</dt><dd>{item.value}</dd></div>)}</dl></section>}
         </>}
       </div>

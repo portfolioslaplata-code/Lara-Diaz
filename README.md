@@ -1,8 +1,8 @@
-# Lara Díaz · Portfolio profesional
+# Lara Diaz · Portfolio profesional
 
-Portfolio profesional con React, Vite y Tailwind CSS. Aplicación independiente de la Landing y las demos. Sin backend, formularios, servicios externos ni fuentes remotas. Repositorio: https://github.com/portfolioslaplata-code/Lara-Diaz.
+Portfolio independiente con React, Vite y Tailwind CSS, sin backend ni servicios externos. Repositorio: https://github.com/portfolioslaplata-code/Lara-Diaz.
 
-## Desarrollo
+## Desarrollo y validación
 
 Requiere Node `^20.19.0 || >=22.12.0`.
 
@@ -14,64 +14,63 @@ npm run build
 npm run test:e2e
 ```
 
-`npm run preview` permite revisar el build. Las pruebas usan Microsoft Edge instalado; `PLAYWRIGHT_CHANNEL` permite elegir otro canal disponible. El servidor de tests usa el puerto 4175. Las capturas quedan en `test-results/` (ignorado).
+`npm run preview` permite revisar el build. Playwright utiliza Microsoft Edge instalado; `PLAYWRIGHT_CHANNEL` permite elegir otro canal disponible. El servidor de pruebas usa el puerto 4175. Las capturas se guardan en `test-results/` (ignorado por Git).
 
-## Dónde editar
+## Fuentes y edición
 
-- `src/data/portfolio.js`: identidad, navegación, Hero, Sobre mí, formación, experiencia, servicios, contacto, textos de interfaz, SEO y lista `pending`.
-- `src/data/projects.js`: fichas, portadas, galerías, memoria y datos técnicos. Los ejemplos no contienen información de obras reales.
-- `src/styles/theme.css`: paleta, tipografías locales y medidas generales.
-- `src/index.css`: composición, responsive y movimiento reducido.
-- `src/components/Sections.jsx`: secciones editoriales y espacios adaptables para fotos.
-- `src/components/Projects.jsx` y `ProjectModal.jsx`: cards y diálogo reutilizable.
-- `src/components/Primitives.jsx`: flechas, encabezados, composición abstracta original y `PortraitSlot`.
-- `src/components/Navbar.jsx`: navegación y menú móvil.
-- `src/App.jsx`: orden de secciones y filtrado de navegación/CTA según contenido disponible.
+- `src/data/portfolio.js`: identidad, navegación, SEO, textos oficiales, formación, experiencia, servicios, contacto y pendientes internos.
+- `src/data/projects.js`: las cuatro fichas reales y sus imágenes, en el orden de presentación.
+- `src/components/Sections.jsx`: secciones editoriales; `Primitives.jsx` conserva la ilustración del Hero y el PortraitSlot.
+- `src/components/Projects.jsx`, `ProjectModal.jsx` y `ProjectSlider.jsx`: cards, diálogo y galería reutilizables.
+- `src/index.css`: composición y responsive; `src/styles/theme.css`: identidad visual y fuentes locales.
+- `src/components/Navbar.jsx` y `BrandMark.jsx`: navegación y marca existentes.
+- `tests/portfolio.spec.js`: contenido, navegación, accesibilidad funcional, imágenes, sliders y responsive.
 
-La metadata se genera desde los datos al iniciar Vite o construir: reiniciar el servidor si cambia SEO. El documento tiene español argentino y Open Graph básico; no se inventó un dominio, canonical ni imagen social. `seo.noindex` está activado para el boceto; revisar al preparar una futura publicación. El contenido se renderiza en el cliente (SPA), sin prerenderizado completo.
+La actualización de noviembre de 2026 utiliza el material seleccionado y los textos proporcionados por Lara. Su nombre público es **Lara Diaz**, sin tilde. No se agregaron datos profesionales por inferencia visual.
 
-## Agregar fotografías
+SEO se genera desde los datos al iniciar Vite o construir: reiniciar el servidor si cambia. Se mantiene `seo.noindex` hasta la revisión de publicación. La SPA no tiene prerenderizado completo. No se inventaron dominio, canonical ni imagen social.
 
-Guardar imágenes optimizadas y autorizadas en `public/images/`. Asignar `hero.image` o `about.image`:
+## Fotografías y portadas
 
-```js
-{ src: '/images/lara.webp', alt: 'Descripción de la fotografía', position: '50% 40%' }
-```
+Los 11 JPEG originales permanecen intactos en `public/images/`. Las versiones de uso público están en `public/images/optimized/`, con nombres cortos. La fotografía personal deriva de `Fotolarasobremi.jpeg` y se muestra completa, sin recorte.
 
-Si son `null`, se muestran las geometrías editoriales existentes. No se extrajo ni publicó la foto del CV.
+| Proyecto | Imágenes | Portada y orden |
+| --- | --- | --- |
+| Vivienda alpina · El Maitén | 1 | Imagen individual del anteproyecto; `alpina-cover.webp`. |
+| Vivienda unifamiliar · Epuyén | 1 | Imagen individual del anteproyecto; `epuyen-cover.webp`. |
+| Casa Diana y Agustin | 5 | Exterior, archivo original `4.26.18 PM.jpeg`; `diana-exterior-cover.webp`. Continúan estar (`4.26.17 PM.jpeg`), estudio (`4.26.17 PM (2).jpeg`), dormitorio (`4.26.17 PM (1).jpeg`) y detalle (`4.29.25 PM.jpeg`). |
+| Vivienda unifamiliar · Lago Puelo | 3 | Fachada, archivo original `4.41.11 PM.jpeg`; `lago-exterior-cover.webp`. Continúan estar (`4.41.10 PM (1).jpeg`) y dormitorio (`4.41.10 PM.jpeg`). |
 
-## Completar un proyecto
+`python scripts/optimize-images.py` reproduce la conversión con Pillow: WebP calidad 85 para las 11 imágenes, sin ampliar ni reducir su resolución; cuatro portadas con lado máximo de 800 px y calidad 82. Corrige orientación EXIF, conserva proporciones, no altera el contenido ni copia metadata privada. Los originales suman 3.576.788 bytes; las 15 versiones WebP, incluyendo portadas adicionales, suman 2.462.442 bytes. No se necesitan Python ni Pillow para ejecutar/buildar el sitio.
 
-Cada ficha admite `title`, `category`, `year`, `location`, `role`, `description`, `narrative` (array de párrafos), `cover`, `images` y `technical` (array de `{ label, value }`). Imágenes: `{ src, alt, caption? }`; `cover` admite `position` para el encuadre. Agregar objetos con `id` único para sumar proyectos.
+Las imágenes tienen dimensiones explícitas, carga diferida y contenedores estables. Solo se monta la imagen activa de una galería; no se descargan todas al entrar al sitio. No hay imágenes remotas.
 
-Mientras `provisional: true`, el modal muestra solamente el título y el aviso pendiente, aunque se hayan cargado campos de trabajo. Cambiar a `false` después de la validación para mostrar los campos completos. Los campos vacíos no generan etiquetas ni bloques. La galería usa imágenes estáticas; el array queda preparado para un futuro slider, que no está implementado.
+## Modelo de proyecto y slider
 
-El diálogo nativo bloquea la interacción exterior. React controla apertura y cierre; se conserva el estilo previo del body y se devuelve el foco al disparador. Soporta Escape, botón de cierre, clic sobre el fondo, contención del foco y scroll interno con cierre siempre visible.
+Cada ficha admite `id`, `title`, `category`, `year`, `location`, `role`, `status`, `description`, `cover`, `images`, `technical` y `narrative`. Los campos vacíos no generan etiquetas. Imágenes: `{ src, alt, width, height, caption? }`; `cover` admite `position` y `fit`. La portada vertical de Lago Puelo usa `contain` para conservar la fachada completa. Se conserva compatibilidad con fichas futuras `provisional: true`, pero las cuatro fichas actuales están confirmadas y no muestran avisos provisorios.
 
-## Pendientes con Lara
+`ProjectSlider` recibe `images` y los textos de interfaz. Una sola imagen es estática y no tiene controles. Varias imágenes habilitan anterior/siguiente, contador anunciado, flechas del teclado dentro de la galería y swipe horizontal. La navegación es circular, sin autoplay ni bibliotecas adicionales. Los gestos verticales conservan el scroll. Las flechas no actúan fuera de la galería ni sobre campos de edición; Tab mantiene el recorrido normal. Cada apertura/proyecto reinicia en la primera imagen, sin mover el foco al navegar.
 
-- Validar `diazlara.arq@gmail.com` antes de publicar. No se incorporaron teléfono, domicilio, edad ni redes.
-- Confirmar fechas y continuidad en Río Tigre y Cooperativa ARQEP / AEP. El CV tiene información hasta aproximadamente 2024; no se utiliza “Actualidad”.
-- Confirmar el estado del Diploma en Bioarquitectura, que en el CV figura en curso.
-- Validar alcance y redacción de las cuatro áreas de servicios: son propuestas derivadas de su trayectoria.
-- Elegir los tres proyectos iniciales (o cambiar la cantidad), confirmar autoría/rol, ubicación, año, textos, memoria e información técnica, y aportar imágenes autorizadas.
-- Aprobar presentación, formación y experiencia seleccionadas. Fotografías de Hero y Sobre mí son opcionales.
+Las vistas completas usan `object-fit: contain`, fondo neutro y transición de 200 ms; movimiento reducido elimina animaciones. El diálogo nativo conserva Escape, cierre por botón/fondo, foco contenido y restaurado a la card, bloqueo del scroll exterior y cierre visible durante el scroll interno.
 
-Se consultaron los PDF proporcionados como referencias. El portfolio histórico no se importó al sitio. Los documentos originales y sus datos privados no se incluyen entre los recursos públicos.
+## Formación y experiencia
 
-## Límites de esta etapa
+Formación contiene cinco entradas en tres grupos: Formación académica, Especializaciones y Publicaciones. La maestría de la Universidad del Bío-Bío comienza en 2025 y está **En curso**. El Diploma en Bioarquitectura también permanece en curso; FEDEMAD no forma parte de esta selección. No se publican certificados ni datos privados.
 
-Los cambios se suben a GitHub cuando se solicita. Esta tarea no incluye una publicación manual. Sin CV descargable, slider, analytics o servicios externos. La publicación y su dominio se definirán por separado después de validar el contenido.
+Experiencia contiene cinco entradas: Cooperativa AEP (Inicio: 2019), Río Tigre, OPISU, Unidad Ejecutora Provincial (UEP, 2016–2017, proyectos educativos rurales) y docencia universitaria, terciaria y secundaria técnica (Actualidad, confirmado por Lara). No se asume vigencia en otras experiencias. Los cuatro servicios y los tres párrafos de Sobre mí respetan el texto suministrado.
 
-## Refinamiento de contenido (iteración 2)
+## Pendientes
 
-- Sobre mí prioriza el recorrido en cooperativas de La Plata y la región.
-- Formación selecciona cinco entradas en tres categorías: académica, construcción sustentable y actividad académica.
-- Experiencia selecciona cuatro entradas con ARQEP / AEP primero. “Inicio: 2019” expresa solamente el inicio documentado y no afirma vigencia actual. Docencia se resume en una sola descripción.
-- Las notas de validación pertenecen a esta documentación, a `pending`, a `needsConfirmation` y a `services.confirmed`, y no se renderizan como avisos públicos. “En curso” es el estado académico visible; actualizarlo desde los datos cuando Lara lo confirme.
-- Se retiraron el epígrafe del Hero y los términos decorativos de Sobre mí. Se mantienen los espacios para futuras fotografías.
-- La navegación utiliza un subrayado de 1 px con transición de 250 ms desde la izquierda, activo al enfocar y al pasar el cursor con un puntero compatible. El movimiento reducido elimina la transición.
+- Confirmar correo de contacto antes de publicar.
+- Confirmar fechas/continuidad de Cooperativa AEP y Río Tigre; no se presenta continuidad implícita.
+- Confirmar posteriormente el estado del Diploma en Bioarquitectura.
+- Los roles específicos en El Maitén, Epuyén y la vivienda de 80 m² de Lago Puelo no están documentados y se omiten.
+- No se suministraron memorias extendidas ni más detalles técnicos de proyectos; se dejan vacíos. Los anteproyectos no se presentan como ejecutados o finalizados.
 
-## Validación
+El nombre Casa Diana y Agustin se conserva como fue entregado. Las notas internas (`pending`, `needsConfirmation`) no se renderizan como avisos públicos. Los servicios están confirmados.
 
-Ejecutar los scripts anteriores para revisar lint, build y diez casos de Playwright en Edge. Cubren contenido seleccionado, ausencia de notas internas, navegación por teclado, apertura y cierre de modales, fichas con scroll interno, movimiento reducido, hover/foco del menú y dispositivos táctiles. Responsive y ausencia de desbordes se verifican a 320, 390, 768 y 1440 px; las capturas de Formación y Experiencia se generan además por separado en móvil y escritorio.
+## Alcance de validación
+
+Las pruebas cubren textos y SEO, cuatro modales, imágenes individuales, las cinco y tres imágenes de los sliders, carga diferida, botones, teclado, gestos táctiles nativos de Chromium, reinicio, foco, Escape/cierre/fondo, scroll interno, campos vacíos, errores de consola y respuestas fallidas. Se revisan 320, 390, 768 y 1440 px, sin desbordes horizontales. Se generan capturas de página completa y de Sobre mí, Formación, Experiencia, Proyectos y ambos sliders a 390/1440 px. Se conservan pruebas de hover/foco y movimiento reducido.
+
+Esta iteración se trabaja localmente: no incluye commit, push ni publicación. No incorpora CV descargable, analytics ni nuevas integraciones.
