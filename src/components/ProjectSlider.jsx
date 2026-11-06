@@ -10,7 +10,10 @@ export default function ProjectSlider({ images, labels }) {
   const multiple = images.length > 1;
   const current = images[index];
   const move = (step) => setIndex((value) => (value + step + images.length) % images.length);
-  return <section className="project-gallery" aria-label={labels.gallery}
+  // La proporción inicial fija el escenario durante la navegación, incluso al
+  // alternar fotos verticales y horizontales. El CSS limita su altura al viewport.
+  const ratio = Math.max(1, (images[0].width || 4) / (images[0].height || 3));
+  return <section className={`project-gallery${multiple ? ' has-controls' : ''}`} aria-label={labels.gallery} style={{ '--gallery-ratio': ratio }}
     onKeyDown={(event) => {
       if (!multiple || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey || event.target.closest('input, select, textarea, [contenteditable="true"]')) return;
       if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {

@@ -302,3 +302,69 @@ test('en pantallas táctiles el subrayado responde al foco y evita hover artific
     expect(await link.locator('.nav-label').evaluate((element) => getComputedStyle(element, '::after').transform)).toBe('matrix(0, 0, 0, 1, 0, 0)');
   } finally { await context.close(); }
 });
+
+for (const [width, height] of [[1440, 900], [1366, 768], [768, 1024], [390, 844], [320, 568], [1024, 600]]) {
+  test(`galería visible al abrir los cuatro proyectos en ${width}x${height}`, async ({ page }) => {
+    const errors = [];
+    page.on('pageerror', (error) => errors.push(error.message));
+    page.on('console', (message) => { if (message.type() === 'error') errors.push(message.text()); });
+    await page.setViewportSize({ width, height });
+    await page.goto('/');
+    for (let index = 0; index < titles.length; index++) {
+      const trigger = page.getByRole('button', { name: `Abrir ${titles[index]}` });
+      await trigger.click();
+      const dialog = page.getByRole('dialog');
+      const surface = dialog.locator('.dialog-surface');
+      const area = dialog.locator('.slider-image');
+      const img = area.locator('img');
+      // No desplazar ni enfocar la galería antes de medir la apertura real.
+      await expect.poll(() => img.evaluate((el) => el.complete && el.naturalWidth > 0)).toBe(true);
+      const verify = async () => {
+        const geometry = await dialog.evaluate((el) => {
+          const rect = (selector) => { const r = el.querySelector(selector).getBoundingClientRect(); return { top: r.top, bottom: r.bottom, left: r.left, right: r.right, height: r.height }; };
+          return { image: rect('.slider-image'), header: rect('.dialog-top'), close: rect('.dialog-close'), controls: el.querySelector('.slider-controls') ? rect('.slider-controls') : null, scroll: el.querySelector('.dialog-surface').scrollTop, overflow: el.querySelector('.dialog-surface').scrollWidth > el.querySelector('.dialog-surface').clientWidth };
+        });
+        expect(geometry.scroll).toBe(0);
+        expect(geometry.overflow).toBe(false);
+        expect(geometry.image.top).toBeGreaterThanOrEqual(geometry.header.bottom);
+        for (const box of [geometry.image, geometry.close, geometry.controls].filter(Boolean)) {
+          expect(box.top).toBeGreaterThanOrEqual(0);
+          expect(box.bottom).toBeLessThanOrEqual(page.viewportSize().height);
+          expect(box.left).toBeGreaterThanOrEqual(0);
+          expect(box.right).toBeLessThanOrEqual(width);
+        }
+        await expect(img).toHaveCSS('object-fit', 'contain');
+        return geometry.image.height;
+      };
+      const initialHeight = await verify();
+      await page.screenshot({ path: `test-results/modal-after-${width}x${height}-${index}.png` });
+      if (index >= 2) {
+        await page.keyboard.press('Tab');
+        await expect(area).toBeFocused();
+        const count = index === 2 ? 5 : 3;
+        for (let n = 1; n < count; n++) {
+          await page.keyboard.press('ArrowRight');
+          await expect(page.getByRole('status')).toContainText(`Imagen ${n + 1} de ${count}`);
+          await expect.poll(() => img.evaluate((el) => el.complete && el.naturalWidth > 0)).toBe(true);
+          expect(await verify()).toBe(initialHeight);
+        }
+        await page.screenshot({ path: `test-results/modal-last-${width}x${height}-${index}.png` });
+      }
+      // Simular cambios de alto del viewport, como la barra móvil.
+      if (width <= 390) {
+        await page.setViewportSize({ width, height: height - 100 });
+        await verify();
+        await page.setViewportSize({ width, height });
+      }
+      await dialog.locator('.project-technical').scrollIntoViewIfNeeded();
+      await expect(dialog.locator('.project-technical')).toBeInViewport();
+      await expect(dialog.locator('.dialog-close')).toBeInViewport();
+      await page.keyboard.press('Escape');
+      await expect(trigger).toBeFocused();
+      await trigger.click();
+      await expect(surface).toHaveJSProperty('scrollTop', 0);
+      await page.keyboard.press('Escape');
+    }
+    expect(errors).toEqual([]);
+  });
+}
